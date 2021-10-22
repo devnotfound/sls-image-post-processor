@@ -1,0 +1,37 @@
+service: sls-image-post-processor
+
+frameworkVersion: '2'
+variablesResolutionMode: 20210326
+custom:
+  customer-image-bucket-name: dev-customer-image-${aws:accountId}-${aws:region}
+  customer-image-bucket-arn: arn:aws:s3:::${self:custom.customer-image-bucket-name}/*
+  env: ${opt:stage}
+  # external_config: ${file(../../path_to_yaml.yaml)}
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  lambdaHashingVersion: 20201221
+  timeout: 30
+  environment:
+    CUSTOMER_IMAGE_BUCKET_NAME: ${self:custom.customer-image-bucket-name}
+    REGION: ${aws:region}
+  s3:
+    customer-image:
+      name: ${self:custom.customer-image-bucket-name}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:*
+      Resource: ${self:custom.customer-image-bucket-arn}
+
+
+functions:
+  postProcessor:
+    handler: handler.postProcessor
+    events:
+      - s3: 
+          bucket: customer-image
+          event: s3:ObjectCreated:*
+          rules:
+            - prefix: uploaded/
