@@ -86,7 +86,7 @@ export AWS_PROFILE=personal
 
 ## Uploading an image to an S3 bucket
 ```
-aws s3 cp ../../../../Downloads/mug-shot.jpg s3://dev-customer-image-985383737087-ap-southeast-2/uploaded/mug-shot.jpg
+aws s3 cp ../../../../Downloads/mug-shot.jpg s3://your-bucket-name-here/uploaded/mug-shot.jpg
 ```
 
 
