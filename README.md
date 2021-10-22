@@ -89,4 +89,8 @@ export AWS_PROFILE=personal
 aws s3 cp ../../../../Downloads/mug-shot.jpg s3://your-bucket-name-here/uploaded/mug-shot.jpg
 ```
 
+## Installing a serverless binary MacOS
+```
+curl -o- -L https://slss.io/install | bash
+```
 
